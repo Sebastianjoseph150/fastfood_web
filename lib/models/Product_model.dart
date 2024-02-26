@@ -49,7 +49,7 @@ class Product extends Equatable {
         description: snap['description'],
         imageurl: Uint8List.fromList(snap['imageurl']), // Convert to Uint8List
         price: snap['price'],
-        restaurent: snap['restaurent']);
+        restaurent: snap['restaurant']);
   }
   @override
   List<Object?> get props => [

@@ -46,6 +46,7 @@ dependencies:
   file_picker: ^5.5.0
   flare_flutter: ^3.0.2
   firebase_storage: ^11.4.1
+  firebase_crashlytics: ^3.4.9
   
   
 dev_dependencies:
@@ -74,6 +75,7 @@ flutter:
   assets:
      - assets/images/burger1.jpg
      - assets/images/logo.png
+     - assets/images/no_image.jpg
 
 #     - images/a_dot_ham.jpeg
 

@@ -16,6 +16,7 @@ void main() async {
           messagingSenderId: "1012153674831",
           projectId: "fast-food-9fa24",
           storageBucket: "fast-food-9fa24.appspot.com"));
+
   runApp(
     MultiProvider(
       providers: [

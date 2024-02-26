@@ -6,7 +6,6 @@ import 'package:fastfoodweb/models/Product_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ProductProvider with ChangeNotifier {
   final List<Product> _products = [];
@@ -21,38 +20,49 @@ class ProductProvider with ChangeNotifier {
   ];
   final CollectionReference collection =
       FirebaseFirestore.instance.collection('foodItems');
-  Uint8List? _pickedImage; // Store the picked image in the provider
+  Uint8List? _pickedImage;
   Uint8List? get pickedImage => _pickedImage;
 
   List<Product> get products => _products;
 
-  Future<void> addProductToFirestore({
+  Future<String> addProductToFirestore({
     required String userID,
     required String name,
     required String price,
     required String description,
     required String category,
     required Uint8List imageUrl,
-    required String restaurent,
+    required String restaurant,
     required int quantity,
   }) async {
-    String base64Image = base64Encode(imageUrl);
+    try {
+      String base64Image = base64Encode(imageUrl);
 
-    // Get a reference to the "foodItems" collection
-    final foodItemsCollection = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
-        .collection(category);
+      ;
 
-    await foodItemsCollection.add({
-      'name': name,
-      'price': price,
-      'description': description,
-      'category': category,
-      'imageUrl': base64Image,
-      'restaurent': restaurent,
-      'quantity': quantity
-    });
+// Get a reference to the "foodItems" collection
+      final foodItemsCollection = FirebaseFirestore.instance
+          .collection('users')
+          .doc(userID)
+          .collection(category);
+
+      DocumentReference docRef = await foodItemsCollection.add({
+        'name': name,
+        'price': price,
+        'description': description,
+        'category': category,
+        'imageUrl': base64Image,
+        'restaurant': restaurant,
+        'quantity': quantity,
+      });
+
+// Return the ID of the newly added document
+      return docRef.id;
+    } catch (e) {
+// Return 'failed' if an error occurs
+      print('Error adding product: $e');
+      return 'failed';
+    }
   }
 
   Future<void> pickImage() async {
@@ -103,7 +113,7 @@ class ProductProvider with ChangeNotifier {
             description: data['description'],
             category: data['category'],
             imageurl: imageBytes,
-            restaurent: data['restaurent'],
+            restaurent: data['restaurant'],
           );
 
           _products.add(product);

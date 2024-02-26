@@ -11,16 +11,15 @@ class RestaurantRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> addRestaurant(String userId, Restaurant restaurant) async {
-    await _firestore
+    _firestore
         .collection('users')
-        .doc(userId)
+        .doc(userId.toString())
         .collection('restaurants')
         .doc(restaurant.id)
         .set({
       'id': restaurant.id,
       'name': restaurant.name,
       'description': restaurant.description,
-      // Add more fields here
     });
   }
 
@@ -41,11 +40,9 @@ class RestaurantRepository {
     }).toList();
 
     if (restaurants.isNotEmpty) {
-      // Set the currentRestaurantName to the first restaurant's name in the list
       GlobalData.currentRestaurantName = restaurants[0].name;
     } else {
-      // Handle the case where no restaurants are found for the user
-      GlobalData.currentRestaurantName = ''; // Set to a default value
+      GlobalData.currentRestaurantName = '';
     }
 
     return restaurants;

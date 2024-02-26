@@ -25,7 +25,6 @@ class MenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      print(user);
       String userID = user.uid;
 
       Provider.of<ProductProvider>(context, listen: false)

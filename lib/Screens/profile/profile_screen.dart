@@ -46,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
       ),
       body: Center(
         child: Container(
@@ -63,12 +63,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 2,
                 blurRadius: 4,
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
               ),
             ],
             color: Colors.white,
           ),
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -91,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               fit: BoxFit.cover,
                             ),
                           )
-                        : Icon(
+                        : const Icon(
                             Icons.add_a_photo,
                             size: 50,
                             color: Colors.grey,
@@ -99,34 +99,33 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _restaurantNameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Restaurant Name',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _descriptionController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Description',
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 4,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   final restaurantName = _restaurantNameController.text;
                   final description = _descriptionController.text;
                   String? imageUrl = await uploadImageToFirebaseStorage();
-                  print('hii');
+                  
                   if (imageUrl != null) {
                     User? user = FirebaseAuth.instance.currentUser;
                     String userID = user!.uid;
-                    print(userID);
 
                     DocumentReference userDocRef = FirebaseFirestore.instance
                         .collection('users')
@@ -170,14 +169,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('Failed to upload image'),
                         duration: Duration(seconds: 2),
                       ),
                     );
                   }
                 },
-                child: Text('Save'),
+                child: const Text('Save'),
               ),
             ],
           ),
